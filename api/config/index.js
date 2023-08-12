@@ -1,18 +1,15 @@
-class Person {
-    #firstName = '';  // use a hash tag to privatise
-    constructor (firstName) {
-        this.#firstName = firstName
-    }
-    walk() {
-        console.log(`${this.#firstName} walking`);
-    }
+require("dotenv").config()
 
-    dance() {
-        console.log(`${this.#firstName}I am dancing`);
-    }
-}
+const {createPool} = require("mysql")
 
-let person = new Person('Messi');
-let person2 = new Person('Ronaldo');
-person.walk()
-person2.dance()
+const connection = createPool ({
+    host: process.env.dbHost,
+    database: process.env.dbName,
+    user:process.env.dbUsr,
+    password: process.env.dbPwd,
+    multipleStatements: true,
+    connectionlimit: 30
+})
+
+
+module.exports = connection
